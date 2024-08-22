@@ -5,7 +5,14 @@ import { useStoreModal } from '@/hooks/use-store-modal';
 import { Modal } from '@/components/ui/modal';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { log } from 'console';
-import { Form, FormControl, FormField, FormItem, FormLabel } from '../ui/form';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '../ui/form';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 const formSchema = z.object({
@@ -41,11 +48,11 @@ export const StoreModal = () => {
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>
-                      <FormControl>
-                        <Input placeholder="E-commerce" {...field} />
-                      </FormControl>
-                    </FormLabel>
+                    <FormLabel>Store Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="E-commerce" {...field} />
+                    </FormControl>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
