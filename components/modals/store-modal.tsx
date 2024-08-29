@@ -1,5 +1,6 @@
 'use client';
 import * as z from 'zod';
+import axios from 'axios';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useStoreModal } from '@/hooks/use-store-modal';
@@ -28,8 +29,15 @@ export const StoreModal = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
-    // TODO: create Store
+    try {
+      setIsLoading(true);
+      const response = await axios.post('/api/stores', values);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
