@@ -13,10 +13,5 @@ export default async function Setuplayout({
   if (store) {
     redirect(`/${store.id}`);
   }
-  return (
-    <>
-      <div className=""></div>
-      {children}
-    </>
-  );
+  return <>{children}</>;
 }
