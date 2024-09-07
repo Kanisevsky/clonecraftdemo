@@ -76,7 +76,7 @@ const StoreSwitcher = ({ className, items = [] }: StoreSwitcherProps) => {
                   className="text-sm"
                 >
                   <StoreIcon className="mr-2 h-4 w-4" />
-                  {store.label}
+                  {currentStore?.label}
                   <Check
                     className={cn(
                       'ml-auto h-4 w-4',
