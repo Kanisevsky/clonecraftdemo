@@ -5,6 +5,9 @@ import { Popover, PopoverTrigger } from './ui/popover';
 import { useStoreModal } from '@/hooks/use-store-modal';
 import { useParams, useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { Button } from './ui/button';
+import { ChevronsUpDown, Store as IconStore } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 type PopoverTriggerProps = React.ComponentPropsWithRef<typeof PopoverTrigger>;
 
@@ -13,7 +16,7 @@ interface StoreSwitcherProps extends PopoverTriggerProps {
 }
 
 const StoreSwitcher = ({ className, items = [] }: StoreSwitcherProps) => {
-  const [isOpen, setisOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const storeModal = useStoreModal;
   const params = useParams();
   const router = useRouter();
@@ -26,9 +29,26 @@ const StoreSwitcher = ({ className, items = [] }: StoreSwitcherProps) => {
     (item) => item.value === params.storeId
   );
   const onStoreSelect = (store: { value: string; label: string }) => {
-    setisOpen(false);
+    setOpen(false);
     router.push(`/${store.value}`);
   };
-  return <Popover></Popover>;
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <Button
+          variant="outline"
+          size="sm"
+          role="combobox"
+          aria-expanded={open}
+          aria-label="Select a store"
+          className={cn('w-[200px] justify-between', className)}
+        >
+          <IconStore className="mr-2 h-4 w-4" />
+          Current Store
+          <ChevronsUpDown className="ml-auto h-4 w-4" />
+        </Button>
+      </PopoverTrigger>
+    </Popover>
+  );
 };
 export default StoreSwitcher;
