@@ -1,10 +1,16 @@
 'use client';
 
-const mainNav = ({
+import { cn } from '@/lib/utils';
+import { useParams, usePathname } from 'next/navigation';
+
+const MainNav = ({
   className,
   ...props
 }: React.HTMLAttributes<HTMLElement>) => {
-  return <p>Mian Navigation</p>;
+  const pathname = usePathname();
+  const params = useParams();
+  const routes = [{}];
+  return <nav className={cn('flex items-center space-x-4 lg:space-x-6')}></nav>;
 };
 
-export default mainNav;
+export default MainNav;
