@@ -1,7 +1,7 @@
 'use client';
 
 import { Store } from '@prisma/client';
-import { Popover, PopoverTrigger } from './ui/popover';
+import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 import { useStoreModal } from '@/hooks/use-store-modal';
 import { useParams, useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -45,9 +45,10 @@ const StoreSwitcher = ({ className, items = [] }: StoreSwitcherProps) => {
         >
           <IconStore className="mr-2 h-4 w-4" />
           Current Store
-          <ChevronsUpDown className="ml-auto h-4 w-4" />
+          <ChevronsUpDown className="ml-auto h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
+      <PopoverContent></PopoverContent>
     </Popover>
   );
 };
