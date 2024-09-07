@@ -93,6 +93,7 @@ const StoreSwitcher = ({ className, items = [] }: StoreSwitcherProps) => {
           <CommandList>
             <CommandGroup>
               <CommandItem
+                className="cursor-pointer"
                 onSelect={() => {
                   setOpen(false);
                   storeModal.onOpen();
