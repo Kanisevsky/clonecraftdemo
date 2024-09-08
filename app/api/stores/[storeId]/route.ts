@@ -1,3 +1,4 @@
+import prismadb from '@/lib/prismadb';
 import { auth } from '@clerk/nextjs/server';
 import { NextResponse } from 'next/server';
 
@@ -6,11 +7,25 @@ export async function PATCH(
   { params }: { params: { storeId: string } }
 ) {
   try {
-    const { userId } = auth();
-    const { body } = await req.json();
+    const { userId } = await auth();
+    const body = await req.json();
     const { name } = body;
-    if (!userId) new NextResponse('Unauthenticated', { status: 401 });
-    if (!name) new NextResponse('Name Is Required', { status: 400 });
+    if (!userId) {
+      return new NextResponse('Unauthenticated', { status: 401 });
+    }
+    if (!name) {
+      return new NextResponse('Name Is Required', { status: 400 });
+    }
+    if (!params.storeId) {
+      return new NextResponse('Store Id is required', { status: 400 });
+    }
+    const store = await prismadb.store.updateMany({
+      where: { id: params.storeId, userId },
+      data: {
+        name,
+      },
+    });
+    return NextResponse.json(store);
   } catch (error) {
     console.log('[STORE_PATCH]', error);
     return new NextResponse('Internal Error', { status: 500 });
