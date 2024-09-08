@@ -8,6 +8,14 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import Heading from '@/components/ui/Heading';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
 
 interface SettingsFormProps {
   initialData: Store;
@@ -20,10 +28,16 @@ type SettingsFormValues = z.infer<typeof formSchema>;
 const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+
   const form = useForm<SettingsFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: initialData,
   });
+
+  const onSubmit = async (data: SettingsFormValues) => {
+    console.log(data);
+  };
+
   return (
     <>
       <div className="flex items-center justify-between">
@@ -33,6 +47,31 @@ const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
         </Button>
       </div>
       <Separator />
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-8 w-full"
+        >
+          <div className="grid grid-cols-3 gap-8">
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Name</FormLabel>
+                  <FormControl>
+                    <Input
+                      disabled={loading}
+                      placeholder="Store Name"
+                      {...field}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            ></FormField>
+          </div>
+        </form>
+      </Form>
     </>
   );
 };
