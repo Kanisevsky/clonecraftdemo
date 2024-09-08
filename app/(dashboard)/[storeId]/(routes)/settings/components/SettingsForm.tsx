@@ -21,6 +21,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import AlertModal from '@/components/modals/alert-modal';
+import ApiAlert from '@/components/ui/apiAlert';
 interface SettingsFormProps {
   initialData: Store;
 }
@@ -118,6 +119,8 @@ const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
           </Button>
         </form>
       </Form>
+      <Separator />
+      <ApiAlert title="test" description="API KEY NUMBER" variant="public" />
     </>
   );
 };
