@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { Input } from '@/components/ui/input';
 import Heading from '@/components/ui/Heading';
 import {
   Form,
@@ -14,8 +15,8 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
 
 interface SettingsFormProps {
   initialData: Store;
@@ -42,7 +43,12 @@ const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
     <>
       <div className="flex items-center justify-between">
         <Heading title="Settings" description="Manage store preferences" />
-        <Button variant="destructive" size="icon" onClick={() => {}}>
+        <Button
+          disabled={loading}
+          variant="destructive"
+          size="icon"
+          onClick={() => setOpen(true)}
+        >
           <Trash className="h-4 w-4" />
         </Button>
       </div>
@@ -66,10 +72,14 @@ const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
                       {...field}
                     />
                   </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             ></FormField>
           </div>
+          <Button disabled={loading} className="ml-auto" type="submit">
+            Save Changes
+          </Button>
         </form>
       </Form>
     </>
