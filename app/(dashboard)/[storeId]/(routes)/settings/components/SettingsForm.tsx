@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Input } from '@/components/ui/input';
 import Heading from '@/components/ui/Heading';
+import { useOrigin } from '@/hooks/use-origin';
 import {
   Form,
   FormControl,
@@ -36,7 +37,7 @@ const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
 
   const params = useParams();
   const router = useRouter();
-
+  const origin = useOrigin();
   const form = useForm<SettingsFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: initialData,
@@ -122,7 +123,7 @@ const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
       <Separator />
       <ApiAlert
         title="NEXT_PUBLIC_API_URL"
-        description="API KEY NUMBER"
+        description={`${origin}/api/${params.storeId}`}
         variant="public"
       />
     </>
