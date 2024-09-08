@@ -120,7 +120,11 @@ const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
         </form>
       </Form>
       <Separator />
-      <ApiAlert title="test" description="API KEY NUMBER" variant="public" />
+      <ApiAlert
+        title="NEXT_PUBLIC_API_URL"
+        description="API KEY NUMBER"
+        variant="public"
+      />
     </>
   );
 };
