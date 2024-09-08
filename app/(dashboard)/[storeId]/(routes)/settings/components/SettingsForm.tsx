@@ -7,7 +7,12 @@ interface SettingsFormProps {
 }
 
 const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
-  return <div>Settings Form</div>;
+  return (
+    <div className="flex items-center justify-between">
+      <Heading title="Settings" description="Manage store preferences" />
+      Settings Form
+    </div>
+  );
 };
 
 export default SettingsForm;
