@@ -6,7 +6,7 @@ import { ImagePlus, Trash } from 'lucide-react';
 import { Button } from './button';
 
 interface ImageUploadProps {
-  disables?: boolean;
+  disabled?: boolean;
   onChange: (value: string) => void;
   onRemove: (value: string) => void;
   value: string[];
@@ -14,7 +14,7 @@ interface ImageUploadProps {
 
 const ImageUpload: React.FC<ImageUploadProps> = ({
   value,
-  disables,
+  disabled,
   onChange,
   onRemove,
 }) => {
@@ -54,8 +54,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
       <CldUploadWidget onUpload={onUpload} uploadPreset="clonecraft">
         {({ open }) => {
           return (
-            <Button onClick={() => open()}>
-              <ImagePlus />
+            <Button type="button" disabled={disabled} onClick={() => open()}>
+              <ImagePlus className="h-4 w-4 mr-2" />
             </Button>
           );
         }}
