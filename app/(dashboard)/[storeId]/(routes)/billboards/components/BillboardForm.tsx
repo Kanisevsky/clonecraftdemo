@@ -76,12 +76,14 @@ const BillboardForm: React.FC<BillboardFormProps> = ({ initialData }) => {
   const onDelete = async () => {
     try {
       setLoading(true);
-      await axios.delete(`/api/stores/${params.storeId}`);
+      await axios.delete(
+        `/api/${params.storeId}/billboards/${params.billboardId}`
+      );
       router.refresh();
       router.push('/');
-      toast.success('Store Deleted');
+      toast.success('Billboard Deleted');
     } catch (error) {
-      toast.error('Make Sure you removed all products and categories first.');
+      toast.error('Make Sure you removed categories first');
     } finally {
       setLoading(false);
       setOpen(false);
