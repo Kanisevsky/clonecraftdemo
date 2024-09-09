@@ -8,7 +8,11 @@ const BillboardPage = async ({
   const billboard = await prismadb.billboard.findUnique({
     where: { id: params.billboardId },
   });
-  return <div>Existing Billboard: {billboard?.label}</div>;
+  return (
+    <div className="flex-col">
+      <div className="flex-1 space-y-4 p-8"></div>
+    </div>
+  );
 };
 
 export default BillboardPage;
