@@ -10,9 +10,6 @@ export async function POST(
     const { userId } = auth();
     const body = await req.json();
     const { label, imageUrl } = body;
-    console.log('User ID:', userId);
-    console.log('Store ID:', params.storeId);
-    console.log('Billboard data:', { label, imageUrl });
 
     if (!userId) {
       return new NextResponse('Unauthenticated', { status: 401 });

@@ -11,11 +11,15 @@ export async function GET(
       return new NextResponse('Billboard Id is Required', { status: 400 });
     }
 
-    const billboards = await prismadb.billboard.findUnique({
+    const billboard = await prismadb.billboard.findUnique({
       where: { id: params.billboardId },
     });
 
-    return NextResponse.json(billboards);
+    if (!billboard) {
+      return new NextResponse('Billboard not found', { status: 404 });
+    }
+
+    return NextResponse.json(billboard);
   } catch (error) {
     console.log('[BILLBOARD_GET]', error);
     return new NextResponse('Internal error', { status: 500 });
