@@ -8,7 +8,7 @@ export async function GET(
 ) {
   try {
     if (!params.billboardId) {
-      return new NextResponse('Store Id is Required', { status: 400 });
+      return new NextResponse('Billboard Id is Required', { status: 400 });
     }
 
     const billboards = await prismadb.billboard.findUnique({
@@ -17,7 +17,7 @@ export async function GET(
 
     return NextResponse.json(billboards);
   } catch (error) {
-    console.log('[Billboard_GET]', error);
+    console.log('[BILLBOARD_GET]', error);
     return new NextResponse('Internal error', { status: 500 });
   }
 }
