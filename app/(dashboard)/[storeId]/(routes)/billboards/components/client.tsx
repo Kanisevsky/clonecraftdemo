@@ -5,7 +5,8 @@ import { Plus } from 'lucide-react';
 import Heading from '@/components/ui/Heading';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
-import { BillboardColumn } from './columns';
+import { BillboardColumn, columns } from './columns';
+import { DataTable } from '@/components/ui/dataTable';
 
 interface BillboardClientProps {
   data: BillboardColumn[];
@@ -30,6 +31,7 @@ const BillboardClient: React.FC<BillboardClientProps> = ({ data }) => {
         </Button>
       </div>
       <Separator />
+      <DataTable columns={columns} data={data} />
     </>
   );
 };
