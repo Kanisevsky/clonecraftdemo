@@ -1,5 +1,7 @@
 'use client';
+import { useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
+import axios from 'axios';
 import toast from 'react-hot-toast';
 import {
   DropdownMenu,
@@ -11,8 +13,7 @@ import {
 import { BillboardColumn } from './columns';
 import { Button } from '@/components/ui/button';
 import { Copy, Edit, MoreHorizontal, Trash } from 'lucide-react';
-import { useState } from 'react';
-import axios from 'axios';
+import AlertModal from '@/components/modals/alert-modal';
 
 interface CellActionsProps {
   data: BillboardColumn;
@@ -22,8 +23,8 @@ const CellActions: React.FC<CellActionsProps> = ({ data }) => {
   const router = useRouter();
   const params = useParams();
 
-  const [Loading, setLoading] = useState(false);
-  const [Open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
   const onCopy = (id: string) => {
     navigator.clipboard.writeText(id);
     toast.success('Billboard ID copied to the billboard');
@@ -32,11 +33,8 @@ const CellActions: React.FC<CellActionsProps> = ({ data }) => {
   const onDelete = async () => {
     try {
       setLoading(true);
-      await axios.delete(
-        `/api/${params.storeId}/billboards/${params.billboardId}`
-      );
+      await axios.delete(`/api/${params.storeId}/billboards/${data.id}`);
       router.refresh();
-      router.push('/');
       toast.success('Billboard Deleted');
     } catch (error) {
       toast.error('Make Sure you removed categories first');
@@ -47,6 +45,12 @@ const CellActions: React.FC<CellActionsProps> = ({ data }) => {
   };
   return (
     <>
+      <AlertModal
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        onConfirm={onDelete}
+        loading={loading}
+      />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-8 w-8 p-0">
@@ -68,7 +72,7 @@ const CellActions: React.FC<CellActionsProps> = ({ data }) => {
             <Edit className="h-4 w-5 mr-2" />
             Update
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setOpen(true)}>
             <Trash className="h-4 w-5 mr-2" />
             Delete
           </DropdownMenuItem>
