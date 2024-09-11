@@ -1,5 +1,6 @@
 'use client';
-
+import { useParams, useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,13 +11,14 @@ import {
 import { BillboardColumn } from './columns';
 import { Button } from '@/components/ui/button';
 import { Copy, Edit, MoreHorizontal, Trash } from 'lucide-react';
-import toast from 'react-hot-toast';
 
 interface CellActionsProps {
   data: BillboardColumn;
 }
 
 const CellActions: React.FC<CellActionsProps> = ({ data }) => {
+  const router = useRouter();
+  const params = useParams();
   const onCopy = (id: string) => {
     navigator.clipboard.writeText(id);
     toast.success('Billboard ID copied to the billboard');
@@ -35,7 +37,11 @@ const CellActions: React.FC<CellActionsProps> = ({ data }) => {
           <Copy className="h-4 w-5 mr-2" />
           Copy ID
         </DropdownMenuItem>
-        <DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() =>
+            router.push(`/${params.storeId}/billboards/${data.id}`)
+          }
+        >
           <Edit className="h-4 w-5 mr-2" />
           Update
         </DropdownMenuItem>
