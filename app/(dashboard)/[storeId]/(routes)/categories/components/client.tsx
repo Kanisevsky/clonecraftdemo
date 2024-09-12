@@ -1,6 +1,5 @@
 'use client';
 import { useParams, useRouter } from 'next/navigation';
-import { Billboard } from '@prisma/client';
 import { Plus } from 'lucide-react';
 import Heading from '@/components/ui/Heading';
 import { Separator } from '@/components/ui/separator';
@@ -34,7 +33,7 @@ const CategoryClient: React.FC<CategoryClientProps> = ({ data }) => {
       <DataTable searchKey="name" columns={columns} data={data} />
       <Heading title="API" description="API calls for Categories" />
       <Separator />
-      <ApiList entityName="categories" entitiyIdName="categoriesId" />
+      <ApiList entityName="categories" entitiyIdName="categoryId" />
     </>
   );
 };
