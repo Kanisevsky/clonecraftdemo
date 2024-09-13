@@ -3,7 +3,7 @@ import axios from 'axios';
 import * as z from 'zod';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
-import { Billboard } from '@prisma/client';
+import { Size } from '@prisma/client';
 import { Trash } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -24,45 +24,45 @@ import AlertModal from '@/components/modals/alert-modal';
 import ImageUpload from '@/components/ui/imageUpload';
 
 const formSchema = z.object({
-  label: z.string().min(1),
-  imageUrl: z.string().min(1),
+  name: z.string().min(1),
+  value: z.string().min(1),
 });
 
-type BillboardFormValues = z.infer<typeof formSchema>;
+type SizeFormValues = z.infer<typeof formSchema>;
 
-interface BillboardFormProps {
-  initialData: Billboard | null;
+interface SizeFormProps {
+  initialData: Size | null;
 }
 
-const BillboardForm: React.FC<BillboardFormProps> = ({ initialData }) => {
+const SizeForm: React.FC<SizeFormProps> = ({ initialData }) => {
   const params = useParams();
   const router = useRouter();
 
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const title = initialData ? 'Edit Billboards' : 'Create Billboards';
-  const description = initialData ? 'Edit a Billboard' : 'Add a new Billboard';
-  const toastMessage = initialData ? 'Billboard Updated' : 'Billboard Created';
+  const title = initialData ? 'Edit sizes' : 'Create sizes';
+  const description = initialData ? 'Edit a Size' : 'Add a new Size';
+  const toastMessage = initialData ? 'Size Updated' : 'Size Created';
   const action = initialData ? 'Save Changes' : 'Create';
 
-  const form = useForm<BillboardFormValues>({
+  const form = useForm<SizeFormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues: initialData || { label: '', imageUrl: '' },
+    defaultValues: initialData || { name: '', value: '' },
   });
 
-  const onSubmit = async (data: BillboardFormValues) => {
+  const onSubmit = async (data: SizeFormValues) => {
     try {
       setLoading(true);
       if (initialData) {
         await axios.patch(
-          `/api/${params.storeId}/billboards/${params.billboardId}`,
+          `/api/${params.storeId}/sizes/${params.billboardId}`,
           data
         );
       } else {
-        await axios.post(`/api/${params.storeId}/billboards`, data);
+        await axios.post(`/api/${params.storeId}/sizes`, data);
       }
-      router.push(`/${params.storeId}/billboards`);
+      router.push(`/${params.storeId}/sizes`);
       toast.success(toastMessage);
     } catch (error) {
       toast.error('Something Went Wrong');
@@ -161,4 +161,4 @@ const BillboardForm: React.FC<BillboardFormProps> = ({ initialData }) => {
   );
 };
 
-export default BillboardForm;
+export default SizeForm;
