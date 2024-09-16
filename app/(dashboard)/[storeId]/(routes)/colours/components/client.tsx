@@ -8,32 +8,32 @@ import { DataTable } from '@/components/ui/dataTable';
 import ApiList from '@/components/ui/apiList';
 import { columns, SizeColumn } from './columns';
 
-interface ColourClientProps {
+interface SizeClientProps {
   data: SizeColumn[];
 }
 
-const ColourClient: React.FC<ColourClientProps> = ({ data }) => {
+const SizeClient: React.FC<SizeClientProps> = ({ data }) => {
   const router = useRouter();
   const params = useParams();
   return (
     <>
       <div className="flex items-center justify-between">
         <Heading
-          title={`Colours (${data?.length})`}
-          description="Manage Colours for your product"
+          title={`Sizes (${data?.length})`}
+          description="Manage Sizes for your product"
         />
-        <Button onClick={() => router.push(`/${params.storeId}/colours/new`)}>
+        <Button onClick={() => router.push(`/${params.storeId}/sizes/new`)}>
           <Plus className="mr-2 h-4 w-4" />
           Add New
         </Button>
       </div>
       <Separator />
       <DataTable searchKey="name" columns={columns} data={data} />
-      <Heading title="API" description="API calls for Colours" />
+      <Heading title="API" description="API calls for Sizes" />
       <Separator />
-      <ApiList entityName="colours" entitiyIdName="colourId" />
+      <ApiList entityName="sizes" entitiyIdName="sizeId" />
     </>
   );
 };
 
-export default ColourClient;
+export default SizeClient;
