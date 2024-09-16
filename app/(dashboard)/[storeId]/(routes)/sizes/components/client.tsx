@@ -6,10 +6,10 @@ import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
 import { DataTable } from '@/components/ui/dataTable';
 import ApiList from '@/components/ui/apiList';
-import { columns, SizeColumn } from './columns';
+import { columns, ColourColumn } from './columns';
 
 interface ColourClientProps {
-  data: SizeColumn[];
+  data: ColourColumn[];
 }
 
 const ColourClient: React.FC<ColourClientProps> = ({ data }) => {
