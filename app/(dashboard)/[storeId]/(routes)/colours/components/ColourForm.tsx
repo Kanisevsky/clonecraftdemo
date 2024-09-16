@@ -3,7 +3,6 @@ import axios from 'axios';
 import * as z from 'zod';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
-import { Size } from '@prisma/client';
 import { Trash } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -21,16 +20,20 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import AlertModal from '@/components/modals/alert-modal';
+import { Colour } from '@prisma/client';
 
 const formSchema = z.object({
   name: z.string().min(1),
-  value: z.string().min(1),
+  value: z
+    .string()
+    .min(4)
+    .regex(/^#/, { message: 'String must be a valid hex code' }),
 });
 
 type ColourFormValues = z.infer<typeof formSchema>;
 
 interface ColourFormProps {
-  initialData: Size | null;
+  initialData: Colour | null;
 }
 
 const ColourForm: React.FC<ColourFormProps> = ({ initialData }) => {
@@ -41,7 +44,7 @@ const ColourForm: React.FC<ColourFormProps> = ({ initialData }) => {
   const [loading, setLoading] = useState(false);
 
   const title = initialData ? 'Edit colours' : 'Create colours';
-  const description = initialData ? 'Edit a Size' : 'Add a new Colour';
+  const description = initialData ? 'Edit a Colour' : 'Add a new Colour';
   const toastMessage = initialData ? 'Colour Updated' : 'Colour Created';
   const action = initialData ? 'Save Changes' : 'Create';
 
@@ -55,7 +58,7 @@ const ColourForm: React.FC<ColourFormProps> = ({ initialData }) => {
       setLoading(true);
       if (initialData) {
         await axios.patch(
-          `/api/${params.storeId}/colours/${params.sizeId}`,
+          `/api/${params.storeId}/colours/${params.colourId}`,
           data
         );
       } else {
@@ -73,7 +76,7 @@ const ColourForm: React.FC<ColourFormProps> = ({ initialData }) => {
   const onDelete = async () => {
     try {
       setLoading(true);
-      await axios.delete(`/api/${params.storeId}/colours/${params.sizeId}`);
+      await axios.delete(`/api/${params.storeId}/colours/${params.colourId}`);
       router.refresh();
       router.push(`/${params.storeId}/colours`);
       toast.success('Colour Deleted');
