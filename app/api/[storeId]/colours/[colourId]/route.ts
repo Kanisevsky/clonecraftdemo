@@ -39,7 +39,7 @@ export async function PATCH(
       return new NextResponse('Name is Required', { status: 400 });
     }
     if (!value) {
-      return new NextResponse('Size Value is Required', { status: 400 });
+      return new NextResponse('Colour Value is Required', { status: 400 });
     }
 
     if (!params.storeId) {
