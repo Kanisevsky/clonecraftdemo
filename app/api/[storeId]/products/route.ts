@@ -4,21 +4,49 @@ import { NextResponse } from 'next/server';
 
 export async function POST(
   req: Request,
-  { params }: { params: { storeId: string } }
+  {
+    params,
+  }: {
+    params: {
+      storeId: string;
+      categoryId: string;
+      colourId: string;
+      sizeId: string;
+    };
+  }
 ) {
   try {
     const { userId } = auth();
     const body = await req.json();
-    const { label, imageUrl } = body;
+    const {
+      name,
+      price,
+      categoryId,
+      colourId,
+      sizeId,
+      images,
+      isFeatured,
+      isArchived,
+    } = body;
 
     if (!userId) {
       return new NextResponse('Unauthenticated', { status: 401 });
     }
-    if (!label) {
-      return new NextResponse('Label is Required', { status: 400 });
+    if (!name) {
+      return new NextResponse('Name is Required', { status: 400 });
     }
-    if (!imageUrl) {
-      return new NextResponse('ImageUrl is Required', { status: 400 });
+    if (!price) {
+      return new NextResponse('Price is Required', { status: 400 });
+    }
+
+    if (!params.categoryId) {
+      return new NextResponse('Category Id is Required', { status: 400 });
+    }
+    if (!params.colourId) {
+      return new NextResponse('Colour Id is Required', { status: 400 });
+    }
+    if (!params.sizeId) {
+      return new NextResponse('Size Id is Required', { status: 400 });
     }
 
     if (!params.storeId) {
