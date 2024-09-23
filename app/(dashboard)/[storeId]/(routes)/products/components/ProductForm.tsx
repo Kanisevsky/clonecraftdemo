@@ -269,6 +269,38 @@ const ProductForm: React.FC<ProductFormProps> = ({
                 </FormItem>
               )}
             ></FormField>
+            <FormField
+              control={form.control}
+              name="colourId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Catergory</FormLabel>
+                  <Select
+                    disabled={loading}
+                    onValueChange={field.onChange}
+                    value={field.value}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue
+                          defaultValue={field.value}
+                          placeholder="Select a colour"
+                        ></SelectValue>
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {colours.map((colour) => (
+                        <SelectItem key={colour.id} value={colour.id}>
+                          {colour.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            ></FormField>
           </div>
           <Button disabled={loading} className="ml-auto" type="submit">
             {action}
