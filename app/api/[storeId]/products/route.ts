@@ -35,6 +35,11 @@ export async function POST(
     if (!name) {
       return new NextResponse('Name is Required', { status: 400 });
     }
+
+    if (!images || !images.lenght) {
+      return new NextResponse('Images are Required', { status: 400 });
+    }
+
     if (!price) {
       return new NextResponse('Price is Required', { status: 400 });
     }
@@ -61,12 +66,26 @@ export async function POST(
       return new NextResponse('Unauthorised', { status: 403 });
     }
 
-    const billboard = await prismadb.billboard.create({
-      data: { label, imageUrl, storeId: params.storeId },
+    const product = await prismadb.product.create({
+      data: {
+        name,
+        price,
+        isFeatured,
+        isArchived,
+        categoryId,
+        colourId,
+        sizeId,
+        storeId: params.storeId,
+        images: {
+          createMany: {
+            data: { ...images.map((image: { url: string }) => image) },
+          },
+        },
+      },
     });
-    return NextResponse.json(billboard);
+    return NextResponse.json(product);
   } catch (error) {
-    console.log('[Billboard_POST]', error);
+    console.log('[PRODUCT_POST]', error);
     return new NextResponse('Internal error', { status: 500 });
   }
 }
