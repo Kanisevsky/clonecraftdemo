@@ -326,7 +326,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
             ></FormField>
             <FormField
               control={form.control}
-              name="isArchive"
+              name="isArchived"
               render={({ field }) => (
                 <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
                   <FormControl>
