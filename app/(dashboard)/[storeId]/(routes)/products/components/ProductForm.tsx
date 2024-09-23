@@ -3,7 +3,7 @@ import axios from 'axios';
 import * as z from 'zod';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
-import { Image, Product } from '@prisma/client';
+import { Category, Colour, Image, Product, Size } from '@prisma/client';
 import { Trash } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -22,6 +22,13 @@ import {
 } from '@/components/ui/form';
 import AlertModal from '@/components/modals/alert-modal';
 import ImageUpload from '@/components/ui/imageUpload';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 const formSchema = z.object({
   name: z.string().min(1),
@@ -38,9 +45,17 @@ type ProductFormValues = z.infer<typeof formSchema>;
 
 interface ProductFormProps {
   initialData: (Product & { images: Image[] }) | null;
+  categories: Category[];
+  sizes: Size[];
+  colours: Colour[];
 }
 
-const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
+const ProductForm: React.FC<ProductFormProps> = ({
+  initialData,
+  categories,
+  sizes,
+  colours,
+}) => {
   const params = useParams();
   const router = useRouter();
 
@@ -186,6 +201,38 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
                       type="number"
                     />
                   </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            ></FormField>
+            <FormField
+              control={form.control}
+              name="categoryId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Catergory</FormLabel>
+                  <Select
+                    disabled={loading}
+                    onValueChange={field.onChange}
+                    value={field.value}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue
+                          defaultValue={field.value}
+                          placeholder="Select a category"
+                        ></SelectValue>
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {categories.map((category) => (
+                        <SelectItem key={category.id} value={category.id}>
+                          {category.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
